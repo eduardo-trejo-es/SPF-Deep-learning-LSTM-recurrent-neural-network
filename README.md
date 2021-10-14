@@ -1,4 +1,4 @@
-# SPF
+# SPF Deep learning LSTM recurrent neural network
 Stock Price Forcasting
 
 This is a python project powered by TensorFlow and Keras. 
