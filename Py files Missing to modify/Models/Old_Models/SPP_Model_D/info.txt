@@ -1,8 +1,0 @@
-loss : 0.090  -  0.160
-
-x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,6), return_sequences=True)(inputs)
-x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,6), return_sequences=True, activation='relu')(inputs)
-#x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
-
-x=LSTM_Layer4=keras.layers.LSTM(90, return_sequences=False)(x)
-dense=Dropout_layer4=keras.layers.Dropout(0.2)(x)# modify
