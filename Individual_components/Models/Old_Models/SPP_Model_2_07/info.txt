@@ -1,0 +1,7 @@
+2014-02-28-TO-2021-09-17 to 2020-09-15-TO-2021-09-15  250 and 250 epochos
+
+line36 x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,6), return_sequences=True, activation='relu')(inputs)
+lstm 1= activacion  = relu
+Test loss: 2.0677597522735596
+Test accuracy: 0.3557792603969574
+now = 2021-09-20 16:44:37.811142
