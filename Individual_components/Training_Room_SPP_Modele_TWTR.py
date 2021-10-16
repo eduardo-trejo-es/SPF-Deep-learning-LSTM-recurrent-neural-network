@@ -26,7 +26,7 @@ from tensorflow import keras
 ################################
 #    Read the index file       #
 ################################
-NameDirectoryPathsFIles="/home/eduardo/Desktop/SPP_deep_learning/BatchDataGenerator_Qt_file/All_Batches_TWTR/IndexFile.csv"
+NameDirectoryPathsFIles="All_Batches_TWTR/IndexFile.csv"
 
 #_-------------- To read the files ----------------------
 with open(NameDirectoryPathsFIles, newline='') as csvfile:
@@ -52,17 +52,14 @@ for i in TestFIleCSV:
         if index_N == 4:
                 trainY_Close=numpy.load(i[0])
         if index_N == 5:
-                trainY_Adj_Close=numpy.load(i[0])
-        if index_N == 6:
                 trainY_Volume=numpy.load(i[0])
         
-        if index_N == 7:
+        if index_N == 6:
                 print('trainX shape == {}.'.format(trainX.shape))
                 print('trainY_Open shape == {}.'.format(trainY_Open.shape))
                 print('trainY_High shape == {}.'.format(trainY_High.shape))
                 print('trainY_Low shape == {}.'.format(trainY_Low.shape))
                 print('trainY_Close shape == {}.'.format(trainY_Close.shape))
-                print('trainY_Adj_Close shape == {}.'.format(trainY_Adj_Close.shape))
                 print('trainY_Volume shape == {}.'.format(trainY_Volume.shape))
                 print("---------------------- Another one ----------------------------")
         
@@ -75,7 +72,7 @@ for i in TestFIleCSV:
                 Create a tf.keras.callbacks.ModelCheckpoint callback that saves weights only during training:
                 https://www.tensorflow.org/tutorials/keras/save_and_load """
 
-                Model_Path='/home/eduardo/Desktop/SPP_deep_learning/BatchDataGenerator_Qt_file/Py files Missing to modify/Models/SPP_Model'
+                Model_Path='Individual_components/Models/SPP_Model'
 
                 #-----------   Loding model
 
@@ -88,11 +85,10 @@ for i in TestFIleCSV:
                 "dense_1": trainY_High,
                 "dense_2": trainY_Low,
                 "dense_3": trainY_Close,
-                "dense_4": trainY_Adj_Close,
-                "dense_5": trainY_Volume,
+                "dense_4": trainY_Volume,
                 }
                 #------------------------- Training model --------------------------------
-                history = model.fit(trainX,y=y_data, epochs=100, batch_size=16)
+                history = model.fit(trainX,y=y_data, epochs=200, batch_size=15)
                 #history = model.fit(trainX,y=y_data, epochs=30, batch_size=16, validation_split=0.1, verbose=1)
 
                 """print("Test loss:", test_scores[0])
@@ -120,6 +116,4 @@ for i in TestFIleCSV:
                 #Model_Path=Model_Path+"_"+dt_string
                 model.save(Model_Path)
 
-                """loaded_array = np.load(PathFile)
-                print('trainX shape == {}.'.format(loaded_array.shape))"""
         index_N=index_N+1

@@ -31,10 +31,10 @@ https://www.youtube.com/watch?v=JN08CqZKKkA&ab_channel=PythonEngineer"""
 
 #---------Layes are created
 
-inputs=keras.Input(shape=(30,6))
+inputs=keras.Input(shape=(30,5))
 
-x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,6), return_sequences=True, activation='sigmoid')(inputs)
-x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,6), return_sequences=True, activation='sigmoid')(inputs)
+x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,5), return_sequences=True, activation='sigmoid')(inputs)
+x=LSTM_Layer1=keras.layers.LSTM(90, input_shape=(30,5), return_sequences=True, activation='sigmoid')(inputs)
 #x=Dropout_layer1=keras.layers.Dropout(0.2)(x)
 
 x=LSTM_Layer4=keras.layers.LSTM(90, return_sequences=False)(x)
@@ -49,7 +49,7 @@ dense2_2=keras.layers.Dense(1)(dense)
 dense2_3=keras.layers.Dense(1)(dense)
 dense2_4=keras.layers.Dense(1)(dense)
 dense2_5=keras.layers.Dense(1)(dense)
-dense2_6=keras.layers.Dense(1)(dense)
+
 
 #-------Layers outputs are linked
 
@@ -58,11 +58,11 @@ outputs2=dense2_2
 outputs3=dense2_3
 outputs4=dense2_4
 outputs5=dense2_5
-outputs6=dense2_6
+
 
 #-----The model it's created
 
-model=keras.Model(inputs=inputs, outputs=[outputs,outputs2,outputs3,outputs4,outputs5,outputs6], name='Prices_Prediction')
+model=keras.Model(inputs=inputs, outputs=[outputs,outputs2,outputs3,outputs4,outputs5], name='Prices_Prediction')
 #model=keras.Model(inputs=[inputs,None], outputs=[outputs,outputs2,outputs3,outputs4,outputs5,outputs6], name='Prices_Prediction')
 
 #print(model.summary())
@@ -77,7 +77,6 @@ loss2 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error
 loss3 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss4 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 loss5 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
-loss6 = keras.losses.MeanSquaredError(reduction="auto", name="mean_squared_error")
 optim=keras.optimizers.Adam(1e-3)
 metrics=["accuracy"]
 
@@ -87,7 +86,6 @@ losses={
     "dense_2": loss3,
     "dense_3": loss4,
     "dense_4": loss5,
-    "dense_5": loss6,
 }
 
 model.compile(loss=losses, optimizer=optim, metrics=metrics)
@@ -100,7 +98,7 @@ keras.utils.plot_model(model, "my_first_model_with_shape_info.png", show_shapes=
 #------------------- Save model ---------------------------------
 
 
-Model_Path='/home/eduardo/Desktop/SPP_deep_learning/BatchDataGenerator_Qt_file/Py files Missing to modify/Models/SPP_Model'
+Model_Path='Individual_components/Models/SPP_Model'
 
 
 # datetime object containing current date and time

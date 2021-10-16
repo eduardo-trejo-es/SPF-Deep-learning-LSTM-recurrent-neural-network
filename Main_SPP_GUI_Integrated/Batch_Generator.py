@@ -20,7 +20,7 @@ from PyQt5.QtCore import *
 
 
 #_--------------------------------------------------------
-class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears in VS code
+class  WorkerThread_Batch_Gen(QThread):
     Update_Progress= pyqtSignal(int)
     Update_Progress_Description= pyqtSignal(str)
     LastBatchPathPredict=pyqtSignal(str)
@@ -55,18 +55,10 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
 
         #df_forscale= yf.download(self.selectedCompany,start='2014-11-18',end=yesterday)
         df_forscale= yf.download(self.selectedCompany,start='2014-11-18',end=self.toDate)
-
+        df_forscale=df_forscale.drop('Adj Close', axis=1)
+        print(df_forscale.head)
         df= yf.download(self.selectedCompany,start=self.startDate,end=self.toDate)
-        #df= yf.download('TWTR',start=self.startDate,end=self.toDate)
-
-        df_topop=yf.download(self.selectedCompany,start=self.startDate,end=self.toDate)
-        #df= yf.download('TWTR',start='2013-11-18',end='2021-01-01')
-        #Get the number of rows and colums in the data set
-        #print(df["Close"].head())
-        #print("End")
-        #print(df.tail()) #7 columns, including the Date. 
-        print(df)
-        #print(type(df))
+        df=df.drop('Adj Close', axis=1)
 
         #----------------------------------------------------------
 
@@ -79,7 +71,7 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
         self.Update_Progress.emit(15)
         self.Update_Progress_Description.emit("Data from Yahoo Finances gotten")
         #Variables for training
-        cols = list(df)[0:6]
+        cols = list(df)[0:5]
         #Date and volume columns are not used in training. 
         #print(cols) #['Open', 'High', 'Low', 'Close', 'Adj Close']
 
@@ -106,8 +98,7 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
         df_for_training_High_scaled=df_for_training_scaled[:,[1]]
         df_for_training_Low_scaled=df_for_training_scaled[:,[2]]
         df_for_training_Close_scaled=df_for_training_scaled[:,[3]]
-        df_for_training_Adj_Close_scaled=df_for_training_scaled[:,[4]]
-        df_for_training_Volume_scaled=df_for_training_scaled[:,[5]]
+        df_for_training_Volume_scaled=df_for_training_scaled[:,[4]]
 
         #------------------------------------------------------------------------------
 
@@ -118,7 +109,6 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
         trainY_High = []
         trainY_Low = []
         trainY_Close = []
-        trainY_Adj_Close = []
         trainY_Volume= []
 
         n_future = 1   # Number of days we want to look into the future based on the past days.
@@ -141,20 +131,18 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
                 trainY_High.append(df_for_training_High_scaled[i:i+1, 0:df_for_training.shape[1]])
                 trainY_Low.append(df_for_training_Low_scaled[i:i+1, 0:df_for_training.shape[1]])
                 trainY_Close.append(df_for_training_Close_scaled[i:i+1, 0:df_for_training.shape[1]])
-                trainY_Adj_Close.append(df_for_training_Adj_Close_scaled[i:i+1, 0:df_for_training.shape[1]])
                 trainY_Volume.append(df_for_training_Volume_scaled[i:i+1, 0:df_for_training.shape[1]])
             
             
 
             trainX, trainY_Open, trainY_High, trainY_Low =  np.array(trainX), np.array(trainY_Open), np.array(trainY_High), np.array(trainY_Low)
-            trainY_Close, trainY_Adj_Close, trainY_Volume = np.array(trainY_Close), np.array(trainY_Adj_Close), np.array(trainY_Volume)
+            trainY_Close, trainY_Volume = np.array(trainY_Close), np.array(trainY_Volume)
 
             trainX=trainX[:len(trainX)]#Why -3
             trainY_Open=trainY_Open[:len(trainY_Open)]#Why -3
             trainY_High=trainY_High[:len(trainY_High)]#Why -3
             trainY_Low=trainY_Low[:len(trainY_Low)]#Why -3
             trainY_Close=trainY_Close[:len(trainY_Close)]#Why -3
-            trainY_Adj_Close=trainY_Adj_Close[:len(trainY_Adj_Close)]#Why -3
             trainY_Volume=trainY_Volume[:len(trainY_Volume)]#Why -3
 
             print('trainX shape == {}.'.format(trainX.shape))
@@ -162,7 +150,6 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
             print('trainY_High shape == {}.'.format(trainY_High.shape))
             print('trainY_Low shape == {}.'.format(trainY_Low.shape))
             print('trainY_Close shape == {}.'.format(trainY_Close.shape))
-            print('trainY_Adj_Close shape == {}.'.format(trainY_Adj_Close.shape))
             print('trainY_Volume shape == {}.'.format(trainY_Volume.shape))
 
             self.Update_Progress.emit(70)
@@ -178,17 +165,7 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
             trainX=np.array(trainX)
             trainX=trainX[:len(trainX)]
             print('trainX shape == {}.'.format(trainX.shape))
-        
-        """#y_pred_future = scaler.inverse_transform(trainX)[:,0]
-        y_pred_future = scaler.inverse_transform(trainX)
-        y_pred_future=y_pred_future
-
-        print(y_pred_future)"""
             
-            
-
-
-
 
         #Creating the numpy files
         #parent_directory="/home/eduardo/Desktop/SPP_deep_learning/BatchDataGenerator_Qt_file/All_Batches_TWTR/"
@@ -285,10 +262,6 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
 
             PathFile_TrainY_Close=savingNumpyArrays(newpath,"trainY_Close",trainY_Close)
 
-            # --------- trainY_Adj_Close numpy array
-
-            PathFile_TrainY_Adj_Close=savingNumpyArrays(newpath,"trainY_Adj_Close",trainY_Adj_Close)
-
 
             # --------- trainY_Volume numpy array
 
@@ -310,7 +283,6 @@ class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears 
             TestFIleCSV.append([PathFile_TrainY_High])
             TestFIleCSV.append([PathFile_TrainY_Low])
             TestFIleCSV.append([PathFile_TrainY_Close])
-            TestFIleCSV.append([PathFile_TrainY_Adj_Close])
             TestFIleCSV.append([PathFile_TrainY_Volume])
             
         if (self.kindBatch =='Predict'):
