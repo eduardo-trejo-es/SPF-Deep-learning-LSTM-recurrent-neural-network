@@ -20,7 +20,7 @@ from PyQt5.QtCore import *
 
 
 #_--------------------------------------------------------
-class  WorkerThread_Batch_Gen(QThread):#Verifying if changes in github, appears in VS code
+class  WorkerThread_Batch_Gen(QThread):
     Update_Progress= pyqtSignal(int)
     Update_Progress_Description= pyqtSignal(str)
     LastBatchPathPredict=pyqtSignal(str)
