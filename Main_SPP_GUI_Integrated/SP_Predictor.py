@@ -54,7 +54,7 @@ class  WorkerThread_SP_Predictor(QThread):
         self.N_Days_to_predict = N_Days_to_predict
 
         if self.company == 'TWTR':
-            self.model_Path='/home/eduardo/Desktop/SPP_deep_learning/BatchDataGenerator_Qt_file/Py files Missing to modify/Models/SPP_Model'
+            self.model_Path='Individual_components/Models/SPP_Model'
         else:
             self.model_Path='none'
 
@@ -74,13 +74,9 @@ class  WorkerThread_SP_Predictor(QThread):
         #print("Fecha de ayer:", yesterday)
         #get the stock quote
 
-        df= yf.download(self.company,start='2014-11-18',end=today)
-
-        df_topop=yf.download(self.company,start='2014-11-18',end=today)
-        #df= yf.download('TWTR',start='2013-11-18',end='2021-01-01')
-        #Get the number of rows and colums in the data set
-        #print(df["Close"].head())
-        #print("End")
+        df= yf.download(self.company,start='2014-02-18',end=today)
+        df=df.drop("Adj Close", axis=1)
+        
         print("---------")
         print(df.tail()) #7 columns, including the Date. 
         print(type(df))
@@ -102,24 +98,13 @@ class  WorkerThread_SP_Predictor(QThread):
         print(train_dates.shape)
         #--------------------------------------
         #Variables for training
-        cols = list(df)[0:6]
+        cols = list(df)[0:5]
         #Date and volume columns are not used in training. 
         print(cols) #['Open', 'High', 'Low', 'Close', 'Adj Close']
 
         #----------------------------------------
         #New dataframe with only training data - 5 columns
         df_for_training = df[cols].astype(float)
-
-        """df_for_training_Open=yOpen.astype(float)
-        df_for_training_High=yHigh.astype(float)
-        df_for_training_Low=yLow.astype(float)
-        df_for_training_Close=yClose.astype(float)
-        df_for_training_Adj_Close=yAdj_Close.astype(float)
-        df_for_training_Volume=yVolume.astype(float)"""
-
-        #Were here 8/23/21
-        """print(type(df_for_training_Close))
-        print(type(df_for_training))"""
 
         print(len(df_for_training))
         # df_for_plot=df_for_training.tail(5000)
@@ -140,8 +125,7 @@ class  WorkerThread_SP_Predictor(QThread):
         df_for_training_High_scaled=df_for_training_scaled[:,[1]]
         df_for_training_Low_scaled=df_for_training_scaled[:,[2]]
         df_for_training_Close_scaled=df_for_training_scaled[:,[3]]
-        df_for_training_Adj_Close_scaled=df_for_training_scaled[:,[4]]
-        df_for_training_Volume_scaled=df_for_training_scaled[:,[5]]
+        df_for_training_Volume_scaled=df_for_training_scaled[:,[4]]
 
 
         #-----------------------------------
@@ -186,7 +170,7 @@ class  WorkerThread_SP_Predictor(QThread):
         #print("--------------------------------")
         for i in range(self.N_Days_to_predict):
             prediction = model.predict(Batch_to_predict) #the input is a 30 days batch
-            prediction_Reshaped=np.reshape(prediction,(1,1,6))
+            prediction_Reshaped=np.reshape(prediction,(1,1,5))
             Batch_to_predict=np.append(Batch_to_predict,prediction_Reshaped, axis=1)
             Batch_to_predict=np.delete(Batch_to_predict,0,1)
             print(Batch_to_predict.shape)
@@ -208,7 +192,6 @@ class  WorkerThread_SP_Predictor(QThread):
         predict_High=[]
         predict_Low=[]
         predict_Close=[]
-        predict_Adj_Close=[]
         predict_Volume=[]
 
         for i in range(len(y_pred_future)):
@@ -216,8 +199,7 @@ class  WorkerThread_SP_Predictor(QThread):
             predict_High.append(y_pred_future[i][0][1])
             predict_Low.append(y_pred_future[i][0][2])
             predict_Close.append(y_pred_future[i][0][3])
-            predict_Adj_Close.append(y_pred_future[i][0][4])
-            predict_Volume.append(y_pred_future[i][0][5])
+            predict_Volume.append(y_pred_future[i][0][4])
 
         print(type(predict_Close))
 
@@ -237,7 +219,7 @@ class  WorkerThread_SP_Predictor(QThread):
         forecast_dates=pd.DatetimeIndex(forecast_dates)
 
 
-        self.df_forecast = pd.DataFrame({'Open':predict_Open,'High':predict_High, 'Low':predict_Low,'Close':predict_Close,'Adj Close':predict_Adj_Close,'Volume':predict_Volume}, index=forecast_dates)
+        self.df_forecast = pd.DataFrame({'Open':predict_Open,'High':predict_High, 'Low':predict_Low,'Close':predict_Close,'Volume':predict_Volume}, index=forecast_dates)
 
         self.df_forecast.index.name="Date"
 
