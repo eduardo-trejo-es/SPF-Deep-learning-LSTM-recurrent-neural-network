@@ -1,4 +1,4 @@
-from typing import Final
+#from typing import Final
 from numpy.core.fromnumeric import shape
 import yfinance as yf
 
