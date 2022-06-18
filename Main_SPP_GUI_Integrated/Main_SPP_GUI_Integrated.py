@@ -391,8 +391,9 @@ class Ui_MainWindow(object):
         self.LB_StateProcessBar_SP.setText(val)
 
     def plotting_forcast(self): 
-        df_forecast,title_Company = self.Worker_SP.pass_forcasting()
-        mpf.plot(df_forecast, type='candle',title= title_Company, style='charles')
+        #df_forecast, title_Company = self.Worker_SP.pass_forcasting()
+        df_forecast = self.Worker_SP.pass_forcasting()
+        mpf.plot(df_forecast, type='candle',title= self.getting_Company_SP(), style='charles')
 
 
 if __name__ == "__main__":
