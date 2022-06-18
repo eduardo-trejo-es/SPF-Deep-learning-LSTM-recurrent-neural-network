@@ -229,7 +229,7 @@ class  WorkerThread_SP_Predictor(QThread):
         #_---------------- geting the candle chart  -
         self.Update_Progress.emit(95)
         self.Update_Progress_Description.emit("Done and ready to restart process :)...")
-        self.title_Company=self.company+"data"
+        self.title_Company=self.company
 
         self.Update_Progress.emit(100)
         #mpf.plot(self.df_forecast, type='candle',title=title_Company, style='charles')
