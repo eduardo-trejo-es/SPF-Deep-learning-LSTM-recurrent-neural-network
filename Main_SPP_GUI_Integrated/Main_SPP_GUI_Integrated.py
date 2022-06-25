@@ -37,56 +37,57 @@ class Ui_MainWindow(object):
         self.tabWidget_Predict_And_BatchGene.setGeometry(QtCore.QRect(10, 10, 601, 451))
         self.tabWidget_Predict_And_BatchGene.setObjectName("tabWidget_Predict_And_BatchGene")
 
-        self.tab_Prection = QtWidgets.QWidget()
-        self.tab_Prection.setObjectName("tab_Prection")
+        ########    Tab Prediction    #############
+        self.tab_Prediction = QtWidgets.QWidget()
+        self.tab_Prediction.setObjectName("tab_Prediction")
 
-        self.CompaniesComboBox_SP = QtWidgets.QComboBox(self.tab_Prection)
+        self.CompaniesComboBox_SP = QtWidgets.QComboBox(self.tab_Prediction)
         self.CompaniesComboBox_SP.setGeometry(QtCore.QRect(40, 60, 151, 25))
         self.CompaniesComboBox_SP.setObjectName("CompaniesComboBox_SP")
         self.CompaniesComboBox_SP.addItems(['none','TWTR']) #Add more items
 
-        self.LBCompaniesComboBox_SP = QtWidgets.QLabel(self.tab_Prection)
+        self.LBCompaniesComboBox_SP = QtWidgets.QLabel(self.tab_Prediction)
         self.LBCompaniesComboBox_SP.setGeometry(QtCore.QRect(40, 40, 141, 17))
         self.LBCompaniesComboBox_SP.setObjectName("LBCompaniesComboBox_SP")
 
-        self.PBtn_SelectBatch_SP = QtWidgets.QPushButton(self.tab_Prection)
+        self.PBtn_SelectBatch_SP = QtWidgets.QPushButton(self.tab_Prediction)
         self.PBtn_SelectBatch_SP.setGeometry(QtCore.QRect(470, 60, 101, 25))
         self.PBtn_SelectBatch_SP.setObjectName("PBtn_SelectBatch_SP")
 
-        self.LEdit_SelectBatch_SP = QtWidgets.QLineEdit(self.tab_Prection)
+        self.LEdit_SelectBatch_SP = QtWidgets.QLineEdit(self.tab_Prediction)
         self.LEdit_SelectBatch_SP.setGeometry(QtCore.QRect(250, 60, 211, 25))
         self.LEdit_SelectBatch_SP.setObjectName("LEdit_SelectBatch_SP")
 
-        self.PbtnStart_SP = QtWidgets.QPushButton(self.tab_Prection)
+        self.PbtnStart_SP = QtWidgets.QPushButton(self.tab_Prediction)
         self.PbtnStart_SP.setGeometry(QtCore.QRect(428, 145, 111, 31))
         self.PbtnStart_SP.setObjectName("PbtnStart_SP")
 
-        self.PbtnCleanall_SP = QtWidgets.QPushButton(self.tab_Prection)
+        self.PbtnCleanall_SP = QtWidgets.QPushButton(self.tab_Prediction)
         self.PbtnCleanall_SP.setGeometry(QtCore.QRect(270, 145, 111, 31))
         self.PbtnCleanall_SP.setObjectName("PbtnCleanall_SP")
 
-        self.Ledit_NDaysPredict = QtWidgets.QLineEdit(self.tab_Prection)
+        self.Ledit_NDaysPredict = QtWidgets.QLineEdit(self.tab_Prediction)
         self.Ledit_NDaysPredict.setGeometry(QtCore.QRect(40, 150, 113, 25))
         self.Ledit_NDaysPredict.setObjectName("Ledit_NDaysPredict")
 
-        self.progressBar = QtWidgets.QProgressBar(self.tab_Prection)
+        self.progressBar = QtWidgets.QProgressBar(self.tab_Prediction)
         self.progressBar.setGeometry(QtCore.QRect(50, 330, 501, 41))
         self.progressBar.setProperty("value", 0)
         self.progressBar.setObjectName("progressBar")
 
-        self.LB_StateProcessBar_SP = QtWidgets.QLabel(self.tab_Prection)
+        self.LB_StateProcessBar_SP = QtWidgets.QLabel(self.tab_Prediction)
         self.LB_StateProcessBar_SP.setGeometry(QtCore.QRect(50, 310, 241, 17))
         self.LB_StateProcessBar_SP.setObjectName("LB_StateProcessBar_SP")
 
-        self.Lb_NdayPredict = QtWidgets.QLabel(self.tab_Prection)
+        self.Lb_NdayPredict = QtWidgets.QLabel(self.tab_Prediction)
         self.Lb_NdayPredict.setGeometry(QtCore.QRect(40, 130, 121, 17))
         self.Lb_NdayPredict.setObjectName("Lb_NdayPredict")
 
-        self.Lb_BatchPath_SP = QtWidgets.QLabel(self.tab_Prection)
+        self.Lb_BatchPath_SP = QtWidgets.QLabel(self.tab_Prediction)
         self.Lb_BatchPath_SP.setGeometry(QtCore.QRect(250, 40, 131, 17))
         self.Lb_BatchPath_SP.setObjectName("Lb_BatchPath_SP")
 
-        self.tabWidget_Predict_And_BatchGene.addTab(self.tab_Prection, "")
+        self.tabWidget_Predict_And_BatchGene.addTab(self.tab_Prediction, "")
 
         self.Tab_BatchGene = QtWidgets.QWidget()
         self.Tab_BatchGene.setObjectName("Tab_BatchGene")
@@ -256,7 +257,7 @@ class Ui_MainWindow(object):
         self.LB_StateProcessBar_SP.setText(_translate("MainWindow", "Ready "))
         self.Lb_NdayPredict.setText(_translate("MainWindow", "N days to predict"))
         self.Lb_BatchPath_SP.setText(_translate("MainWindow", "Batch Path"))
-        self.tabWidget_Predict_And_BatchGene.setTabText(self.tabWidget_Predict_And_BatchGene.indexOf(self.tab_Prection), _translate("MainWindow", "Stock Prections"))
+        self.tabWidget_Predict_And_BatchGene.setTabText(self.tabWidget_Predict_And_BatchGene.indexOf(self.tab_Prediction), _translate("MainWindow", "Stock Prections"))
         self.LB_From.setText(_translate("MainWindow", "Date From"))
         self.LB_To.setText(_translate("MainWindow", "Date To"))
         self.Pbtn_Start.setText(_translate("MainWindow", "Start"))
